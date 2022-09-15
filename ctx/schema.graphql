@@ -1,0 +1,9 @@
+type TransferEntity @entity {
+  id: ID!
+  from: String!
+  to: String!
+  txHash: String!
+  amount: BigInt!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}

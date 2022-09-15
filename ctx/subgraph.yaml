@@ -1,0 +1,28 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CTX
+    network: mainnet
+    source:
+      address: "0x321C2fE4446C7c963dc41Dd58879AF648838f98D"
+      abi: CTX
+      startBlock: 12183936
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - DelegateChanged
+        - DelegateVotesChanged
+        - MinterChanged
+        - Transfer
+      abis:
+        - name: CTX
+          file: ./abis/CTX.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/ctx.ts
