@@ -1,0 +1,7 @@
+{
+  "mainnet": {
+    "UniswapV2Pair": {
+      "address": "0x2a93167ed63a31f35ca4788e2eb9fbd9fa6089d0"
+    }
+  }
+}

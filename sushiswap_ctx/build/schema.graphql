@@ -1,0 +1,35 @@
+type BurnEvent @entity {
+  id: ID!
+  sender: String!
+  amount0: BigInt!
+  amount1: BigInt!
+  to: String!
+  txHash: String!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
+
+
+type MintEvent @entity {
+  id: ID!
+  sender: String!
+  amount0: BigInt!
+  amount1: BigInt!
+  txHash: String!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
+
+
+type SwapEvent @entity {
+  id: ID!
+  sender: String!
+  to: String!
+  amount0In: BigInt!
+  amount1In: BigInt!
+  amount0Out: BigInt!
+  amount1Out: BigInt!
+  txHash: String!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}

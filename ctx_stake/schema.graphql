@@ -1,0 +1,30 @@
+type RewardPaidEvent @entity {
+  id: ID!
+  user: String!
+  reward: BigInt!
+  txHash: String!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
+
+
+type StakedEvent @entity {
+  id: ID!
+  delegator: String!
+  delegatee: String!
+  amount: BigInt!
+  txHash: String!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
+
+
+type WithdrawnEvent @entity {
+  id: ID!
+  delegator: String!
+  delegatee: String!
+  amount: BigInt!
+  txHash: String!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
