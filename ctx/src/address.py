@@ -1,10 +1,13 @@
+import os
+from collections import defaultdict
+
 from sqlalchemy.orm import Session
 from web3 import Web3
 
 from models import Address, engine
 
 w3 = Web3(Web3.HTTPProvider(
-    "https://eth-mainnet.alchemyapi.io/v2/iyHzyz8TNXiqlQmJ7xEoK6cCe0-pQosM"
+    f"https://eth-mainnet.alchemyapi.io/v2/{os.environ['ALCHEMY_KEY']}"
 ))
 
 
@@ -33,5 +36,28 @@ def crawl_addresses():
         session.commit()
 
 
+def unique_contacts():
+    seen_code = set()
+    similar_contacts = defaultdict(list)
+    contracts = []
+    count = 0
+    with Session(engine) as session:
+        for addr in session.query(Address).filter_by(is_contract=True).all():
+            print(f"count = {count}")
+            count += 1
+            code = w3.eth.getCode(Web3.toChecksumAddress(addr.value)).hex()
+            if code in seen_code:
+                similar_contacts[hash(code)].append(addr.value)
+            else:
+                seen_code.add(code)
+                contracts.append(addr.value)
+    print("#" * 20 + "Contracts" + "#" * 20)
+    print('\n'.join(contracts))
+    print("#" * 20 + "Similar contracts" + "#" * 20)
+    for _hash, addresses in similar_contacts.items():
+        print("*" * 20 + str(_hash) + "*" * 20)
+        print('\n'.join(addresses))
+
+
 if __name__ == "__main__":
-    crawl_addresses()
+    unique_contacts()
