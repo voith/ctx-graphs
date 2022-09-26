@@ -14,7 +14,7 @@ import { RewardPaidEvent, StakedEvent, WithdrawnEvent } from "../generated/schem
 
 export function handleRewardPaid(event: RewardPaid): void {
    let rewardEntity = new RewardPaidEvent(
-     event.transaction.hash.toHex()
+     event.transaction.hash.toHex() + "-" + event.params.user.toHex()
    )
    rewardEntity.user = event.params.user.toHex()
    rewardEntity.reward = event.params.reward
@@ -27,7 +27,9 @@ export function handleRewardPaid(event: RewardPaid): void {
 
 export function handleStaked(event: Staked): void {
    let stakedEntity = new StakedEvent(
-     event.transaction.hash.toHex()
+     event.transaction.hash.toHex() +
+     "-" + event.params.delegator.toHex() +
+     "-" + event.params.delegatee.toHex()
    )
    stakedEntity.delegator = event.params.delegator.toHex()
    stakedEntity.delegatee = event.params.delegatee.toHex()
@@ -41,7 +43,9 @@ export function handleStaked(event: Staked): void {
 
 export function handleWithdrawn(event: Withdrawn): void {
    let withdrawEntity = new WithdrawnEvent(
-     event.transaction.hash.toHex()
+     event.transaction.hash.toHex() +
+     "-" + event.params.delegator.toHex() +
+     "-" + event.params.delegatee.toHex()
    )
    withdrawEntity.delegator = event.params.delegator.toHex()
    withdrawEntity.delegatee = event.params.delegatee.toHex()

@@ -82,7 +82,7 @@ import { TransferEntity } from "../generated/schema"
 
 export function handleTransfer(event: Transfer): void {
    let transferEntity = new TransferEntity(
-    event.transaction.hash.toHex() + "-" + event.params.from.toHex() + "-" + event.params.from.toHex()
+    event.transaction.hash.toHex() + "-" + event.params.from.toHex() + "-" + event.params.to.toHex()
    )
    transferEntity.from = event.params.from.toHex()
    transferEntity.to = event.params.to.toHex()

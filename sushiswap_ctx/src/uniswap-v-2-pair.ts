@@ -13,7 +13,9 @@ import { BurnEvent, MintEvent, SwapEvent } from "../generated/schema"
 
 export function handleBurn(event: Burn): void {
    let burnEntity = new BurnEvent(
-     event.transaction.hash.toHex()
+     event.transaction.hash.toHex() +
+     "-" + event.params.sender.toHex() +
+     "-" + event.params.to.toHex()
    )
    burnEntity.sender = event.params.sender.toHex()
    burnEntity.to = event.params.to.toHex()
@@ -28,7 +30,7 @@ export function handleBurn(event: Burn): void {
 export function handleMint(event: Mint): void {
 
   let MintEntity = new MintEvent(
-     event.transaction.hash.toHex()
+     event.transaction.hash.toHex() + "-" + event.params.sender.toHex()
    )
    MintEntity.sender = event.params.sender.toHex()
    MintEntity.amount0 = event.params.amount0
@@ -42,7 +44,9 @@ export function handleMint(event: Mint): void {
 
 export function handleSwap(event: Swap): void {
     let swapEntity = new SwapEvent(
-     event.transaction.hash.toHex()
+     event.transaction.hash.toHex() +
+     "-" + event.params.sender.toHex() +
+     "-" + event.params.to.toHex()
    )
    swapEntity.sender = event.params.sender.toHex()
    swapEntity.to = event.params.to.toHex()

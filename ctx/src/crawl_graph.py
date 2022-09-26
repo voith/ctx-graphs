@@ -283,7 +283,7 @@ def crawl_transfer_entities():
     crawl_graph(
         query=transfer_entities_query,
         graph_slug="ctx",
-        graph_version="v0.0.1",
+        graph_version="v0.0.2",
         data_key='transferEntities',
         save_func=save_transfer_entity_to_db
     )
@@ -323,7 +323,7 @@ def crawl_sushi_burn_event():
     crawl_graph(
         query=sushiswap_burn_event_query,
         graph_slug="sushiswap_ctx",
-        graph_version="v0.0.1",
+        graph_version="v0.0.2",
         data_key='burnEvents',
         save_func=save_sushi_burn_event
     )
@@ -333,7 +333,7 @@ def crawl_sushi_mint_event():
     crawl_graph(
         query=sushiswap_mint_event_query,
         graph_slug="sushiswap_ctx",
-        graph_version="v0.0.1",
+        graph_version="v0.0.2",
         data_key='mintEvents',
         save_func=save_mint_event
     )
@@ -343,11 +343,14 @@ def crawl_sushi_swap_event():
     crawl_graph(
         query=sushiswap_swap_event_query,
         graph_slug="sushiswap_ctx",
-        graph_version="v0.0.1",
+        graph_version="v0.0.2",
         data_key='swapEvents',
         save_func=save_swap_event
     )
 
 
 if __name__ == "__main__":
+    crawl_transfer_entities()
+    crawl_sushi_burn_event()
+    crawl_sushi_mint_event()
     crawl_sushi_swap_event()
