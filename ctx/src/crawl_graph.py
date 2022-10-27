@@ -1,3 +1,5 @@
+import pdb
+
 import requests
 from sqlalchemy.orm import Session
 
@@ -9,6 +11,7 @@ from models import (
     SushiSwapBurnEvent,
     SushiSwapMintEvent,
     SushiSwapSwapEvent,
+    TCAPTransferEvent,
     engine
 )
 
@@ -123,6 +126,22 @@ sushiswap_swap_event_query = """
     amount1In
     amount0Out
     amount1Out
+    txHash
+    timestamp
+    blockNumber
+  }
+}
+"""
+
+tcap_transfer_query = """
+{
+  tcaptransfers(
+    orderBy: timestamp, first: 1000, where: {timestamp_gt: %d}
+  ) {
+    id
+    from
+    to
+    value
     txHash
     timestamp
     blockNumber
@@ -246,6 +265,22 @@ def save_swap_event(tx_info):
             session.commit()
 
 
+def save_tcap_transfer_event(tx_info):
+    with Session(engine) as session:
+        for event in tx_info:
+            transfer_event = TCAPTransferEvent(
+                id=event['id'],
+                from_=event['from'],
+                to=event['to'],
+                value=event['value'],
+                tx_hash=event['txHash'],
+                timestamp=event['timestamp'],
+                blockNumber=event['blockNumber'],
+            )
+            session.add(transfer_event)
+            session.commit()
+
+
 def crawl_graph(query, graph_slug, graph_version, data_key, save_func):
     timestamp = 0
     count = 0
@@ -349,8 +384,19 @@ def crawl_sushi_swap_event():
     )
 
 
+def crawl_tcap_transfer_event():
+    crawl_graph(
+        query=tcap_transfer_query,
+        graph_slug="tcap",
+        graph_version="v0.0.2",
+        data_key='tcaptransfers',
+        save_func=save_tcap_transfer_event
+    )
+
+
 if __name__ == "__main__":
-    crawl_transfer_entities()
-    crawl_sushi_burn_event()
-    crawl_sushi_mint_event()
-    crawl_sushi_swap_event()
+    # crawl_transfer_entities()
+    # crawl_sushi_burn_event()
+    # crawl_sushi_mint_event()
+    # crawl_sushi_swap_event()
+    crawl_tcap_transfer_event()

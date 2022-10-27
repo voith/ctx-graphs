@@ -102,4 +102,16 @@ class SushiSwapSwapEvent(Base):
     blockNumber = Column(Numeric(80))
 
 
+class TCAPTransferEvent(Base):
+    __tablename__ = 'TCAPTransferEvent'
+
+    id = Column(String, primary_key=True)
+    from_ = Column(String)
+    to = Column(String)
+    value = Column(Numeric(80))
+    tx_hash = Column(String)
+    timestamp = Column(Numeric(80))
+    blockNumber = Column(Numeric(80))
+
+
 Base.metadata.create_all(engine)
